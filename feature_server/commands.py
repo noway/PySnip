@@ -90,6 +90,8 @@ def get_team(connection, value):
         return connection.protocol.blue_team
     elif value == 'green':
         return connection.protocol.green_team
+    elif value == 'spectator':
+        return connection.protocol.spectator_team
     raise InvalidTeam()
 
 def join_arguments(arg, default = None):
@@ -301,7 +303,7 @@ def unlock(connection, value):
         team.name))
 
 @admin
-def switch(connection, player = None):
+def switch(connection, player = None, team = None):
     protocol = connection.protocol
     if player is not None:
         player = get_player(protocol, player)
@@ -312,9 +314,13 @@ def switch(connection, player = None):
     if player.team.spectator:
         player.send_chat("The switch command can't be used on a spectating player.")
         return
+    if team is None:
+        new_team = player.team.other
+    else:
+        new_team = get_team(connection, team)
     if player.invisible:
         old_team = player.team
-        player.team = player.team.other
+        player.team = new_team
         player.on_team_changed(old_team)
         player.spawn(player.world_object.position.get())
         player.send_chat('Switched to %s team' % player.team.name)
@@ -324,7 +330,7 @@ def switch(connection, player = None):
         protocol.irc_say('* %s silently switched teams' % player.name)
     else:
         player.respawn_time = protocol.respawn_time
-        player.set_team(player.team.other)
+        player.set_team(new_team)
         protocol.send_chat('%s switched teams' % player.name, irc = True)
 
 @name('setbalance')
