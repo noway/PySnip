@@ -44,9 +44,13 @@ pyspades/packet.cpp
 pyspades/vxl.cpp
 pyspades/world.cpp
 
+# enet
 enet/pyenet/enet.c
 enet/pyenet/__init__.py
 enet/pyenet/enet-pyspades.pyx
 enet/pyenet/enet/
 enet/pyenet/build/
 enet/enet-*.tar.gz
+
+dist/
+pysnip.egg-info/

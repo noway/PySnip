@@ -42,7 +42,7 @@ class build(_build):
 
 setup(
     name = 'pysnip',
-    packages = ['pysnip', 'pyspades', 'pyspades.enet', 'pysnip.feature_server'],
+    packages = ['pysnip', 'pysnip.feature_server', 'pyspades', 'pyspades.enet'],
     version = '0.0.0',
     description = 'Open-source server implementation for Ace of Spades',
     author = 'Matpow2, Stackoverflow',
